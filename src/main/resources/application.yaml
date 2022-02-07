@@ -1,0 +1,14 @@
+server:
+  port : 8282
+
+spring:
+  datasource:
+    driver-class-name: org.hsqldb.jdbc.JDBCDriver
+    url: jdbc:hsqldb:mem:db
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create
+      show-sql: true
+

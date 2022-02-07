@@ -1,0 +1,147 @@
+swagger: "2.0"
+info:
+  description: "This is a Cake Information server."
+  version: "1.0.0"
+  title: "Cake API"
+basePath: "/v2"
+tags:
+  - name: "cakes"
+    description: "Everything about your Cake"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /cakes:
+    post:
+      tags:
+        - "cakes"
+      summary: "Add a new cake to the cakes"
+      description: ""
+      operationId: "addCake"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Cake object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Cake"
+      responses:
+        "405":
+          description: "Invalid input"
+    put:
+      tags:
+        - "cakes"
+      summary: "Update an existing cake"
+      description: ""
+      operationId: "updateCake"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Cake object that needs to be added to the Cakes"
+          required: true
+          schema:
+            $ref: "#/definitions/Cake"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Cake not found"
+        "405":
+          description: "Validation exception"
+    get:
+      tags:
+        - "cakes"
+      summary: "Get all cakes"
+      description: "Get all cakes"
+      operationId: "getAll"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Cake"
+        "400":
+          description: "Invalid status value"
+  /cakes/{cakeTitle}:
+    get:
+      tags:
+        - "cakes"
+      summary: "Find cake by ID"
+      description: "Returns a single cake"
+      operationId: "getCakeByTitle"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "cakeTitle"
+          in: "path"
+          description: "ID of cake to return"
+          required: true
+          type: "string"
+          format: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Cake"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Cake not found"
+    delete:
+      tags:
+        - "cakes"
+      summary: "Deletes a cake"
+      description: ""
+      operationId: "deleteCake"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "cakeTitle"
+          in: "path"
+          description: "Cake id to delete"
+          required: true
+          type: "string"
+          format: "string"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Cake not found"
+
+definitions:
+  Cake:
+    type: "object"
+    required:
+      - "title"
+      - "description"
+      - "image"
+    properties:
+      title:
+        type: "string"
+        format: "title"
+      description:
+        type: "string"
+        example: "description"
+      image:
+        type: "string"
+        example: "image"
+    xml:
+      name: "Cake"
